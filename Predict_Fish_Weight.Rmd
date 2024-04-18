@@ -176,3 +176,7 @@ which.max(summary.out$adjr2)
 The best two parameters to predict weight is L3 and Width.
 
 ## Final Summary Statements
+
+The best two parameters to predict weight in a perch fish is height and width.  
+The best two parameters to predict weight in a pike fish is l1 and l3.  
+The best two parameters to predict weight in a roach fish is l3 and width.  
