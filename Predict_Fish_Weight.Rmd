@@ -128,8 +128,51 @@ The best two parameters to predict weight in a pike Fish is l1 and l3.
 
 ## Roach
 
+```{r}
+roachFish <- filter(fishdata, Species=="Roach")
+roachFish <- roachFish %>%
+  select(-Species)
+```
+
 ### Best Models
 
+```{r}
+roachModel <- lm(Weight~., data=roachFish)
+summary(roachModel)
+```
+
 ### Best Two regressor model
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = roachFish,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+
+
+```{r}
+best2.model <- lm(Weight~Length3+Width,data=roachFish)
+summary(best2.model)
+```
+
+```{r}
+anova(roachModel,best2.model)
+```
+
+```{r}
+which.max(summary.out$adjr2)
+```
+
+The best two parameters to predict weight is L3 and Width.
 
 ## Final Summary Statements
